@@ -1,0 +1,11 @@
+{
+    "id" : "HannahsWorld",
+    "version" : "0.1.0-SNAPSHOT",
+    "author" : "Hannah",
+    "displayName" : "Hannahs World",
+    "description" : "Testing",
+    "dependencies" : [
+        {"id": "Core", "minVersion": "2.0.0"}
+    ],
+    "serverSideOnly" : false
+}
