@@ -5,7 +5,7 @@
     "displayName" : "Hannahs World",
     "description" : "Testing",
     "dependencies" : [
-        {"id": "Core", "minVersion": "2.0.0"}
+        {"id": "Core", "minVersion": "2.1.0"}
     ],
     "serverSideOnly" : false
 }

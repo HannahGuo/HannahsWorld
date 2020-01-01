@@ -42,11 +42,15 @@ import org.terasology.world.generation.WorldRasterizer;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 
 public class HannahWorldRasterizer implements WorldRasterizer {
-    private Block dirt;
+    private Block stone;
+    private Block hardstone;
+    private Block mantlestone;
 
     @Override
     public void initialize() {
-        dirt = CoreRegistry.get(BlockManager.class).getBlock("Core:Dirt");
+        stone = CoreRegistry.get(BlockManager.class).getBlock("CoreBlocks:Stone");
+        hardstone = CoreRegistry.get(BlockManager.class).getBlock("CoreBlocks:HardStone");
+        mantlestone = CoreRegistry.get(BlockManager.class).getBlock("CoreBlocks:MantleStone");
     }
 
     @Override
@@ -54,8 +58,13 @@ public class HannahWorldRasterizer implements WorldRasterizer {
         SurfaceHeightFacet surfaceHeightFacet = chunkRegion.getFacet(SurfaceHeightFacet.class);
         for (Vector3i position : chunkRegion.getRegion()) {
             float surfaceHeight = surfaceHeightFacet.getWorld(position.x, position.z);
-            if (position.y < surfaceHeight) {
-                chunk.setBlock(ChunkMath.calcBlockPos(position), dirt);
+            if (position.y == Math.floor(surfaceHeight) ){
+                chunk.setBlock(ChunkMath.calcBlockPos(position), mantlestone);
+            } else if (position.y < surfaceHeight) {
+                chunk.setBlock(ChunkMath.calcBlockPos(position), stone);
+                if(position.y % 2 == 0) {
+                    chunk.setBlock(ChunkMath.calcBlockPos(position), hardstone);
+                }
             }
         }
     }
