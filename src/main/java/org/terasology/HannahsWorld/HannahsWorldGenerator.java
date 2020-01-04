@@ -30,6 +30,9 @@ package org.terasology.HannahsWorld;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import org.terasology.HannahsWorld.Houses.HouseProvider;
+import org.terasology.HannahsWorld.Houses.HouseRasterizer;
+import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.engine.SimpleUri;
 import org.terasology.registry.In;
 import org.terasology.world.generation.BaseFacetedWorldGenerator;
@@ -49,6 +52,9 @@ public class HannahsWorldGenerator extends BaseFacetedWorldGenerator {
     protected WorldBuilder createWorld() {
         return new WorldBuilder(worldGeneratorPluginLibrary)
                 .addProvider(new SurfaceProvider())
-                .addRasterizer(new HannahWorldRasterizer());
+                .addProvider(new SeaLevelProvider(0))
+                .addProvider(new HouseProvider())
+                .addRasterizer(new HannahWorldRasterizer())
+                .addRasterizer(new HouseRasterizer());
     }
 }

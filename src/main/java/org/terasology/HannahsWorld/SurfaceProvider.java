@@ -48,7 +48,7 @@ public class SurfaceProvider implements FacetProvider {
 
     @Override
     public void setSeed(long seed) {
-        surfaceNoise = new SubSampledNoise(new SimplexNoise(seed), new Vector2f(0.05f, 0.05f), 20);
+        surfaceNoise = new SubSampledNoise(new SimplexNoise(seed), new Vector2f(0.03f, 0.03f), 1);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class SurfaceProvider implements FacetProvider {
         // Loop through every position in our 2d array
         Rect2i processRegion = facet.getWorldRegion();
         for (BaseVector2i position: processRegion.contents()) {
-            facet.setWorld(position, surfaceNoise.noise(position.x(), position.y()) * 100);
+            facet.setWorld(position, surfaceNoise.noise(position.x(), position.y()) * 6);
         }
 
         // Pass our newly created and populated facet to the region

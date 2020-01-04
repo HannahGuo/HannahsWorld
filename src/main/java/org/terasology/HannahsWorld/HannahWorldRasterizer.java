@@ -41,16 +41,44 @@ import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class HannahWorldRasterizer implements WorldRasterizer {
-    private Block stone;
-    private Block hardstone;
-    private Block mantlestone;
+    private Block candyYellow;
+    private Block candyRed;
+    private Block candyBlue;
+    private Block candyGreen;
+    private Block candyWhite;
+    private Block candyDark;
+    private Block glass;
+    private Block lava;
 
     @Override
     public void initialize() {
-        stone = CoreRegistry.get(BlockManager.class).getBlock("CoreBlocks:Stone");
-        hardstone = CoreRegistry.get(BlockManager.class).getBlock("CoreBlocks:HardStone");
-        mantlestone = CoreRegistry.get(BlockManager.class).getBlock("CoreBlocks:MantleStone");
+        candyYellow = CoreRegistry.get(BlockManager.class).getBlock("HannahsWorld:CandyYellow");
+        candyRed = CoreRegistry.get(BlockManager.class).getBlock("HannahsWorld:CandyRed.block");
+        candyBlue = CoreRegistry.get(BlockManager.class).getBlock("HannahsWorld:CandyBlue");
+        candyGreen = CoreRegistry.get(BlockManager.class).getBlock("HannahsWorld:CandyGreen");
+        candyWhite = CoreRegistry.get(BlockManager.class).getBlock("HannahsWorld:CandyWhite");
+        candyDark = CoreRegistry.get(BlockManager.class).getBlock("HannahsWorld:CandyDark");
+        glass = CoreRegistry.get(BlockManager.class).getBlock("CoreBlocks:Glass");
+        lava = CoreRegistry.get(BlockManager.class).getBlock("CoreBlocks:Lava");
+    }
+
+    private Block returnLightBlock(int block) {
+        switch (block) {
+            case 1:
+                return candyYellow;
+            case 2:
+                return candyRed;
+            case 3:
+                return candyBlue;
+            case 4:
+                return candyGreen;
+            case 5:
+                return candyDark;
+        };
+        return candyWhite;
     }
 
     @Override
@@ -58,13 +86,9 @@ public class HannahWorldRasterizer implements WorldRasterizer {
         SurfaceHeightFacet surfaceHeightFacet = chunkRegion.getFacet(SurfaceHeightFacet.class);
         for (Vector3i position : chunkRegion.getRegion()) {
             float surfaceHeight = surfaceHeightFacet.getWorld(position.x, position.z);
-            if (position.y == Math.floor(surfaceHeight) ){
-                chunk.setBlock(ChunkMath.calcBlockPos(position), mantlestone);
-            } else if (position.y < surfaceHeight) {
-                chunk.setBlock(ChunkMath.calcBlockPos(position), stone);
-                if(position.y % 2 == 0) {
-                    chunk.setBlock(ChunkMath.calcBlockPos(position), hardstone);
-                }
+            int randomNum = ThreadLocalRandom.current().nextInt(1, 100);
+            if (position.y < surfaceHeight) {
+                chunk.setBlock(ChunkMath.calcBlockPos(position), returnLightBlock(randomNum));
             }
         }
     }
