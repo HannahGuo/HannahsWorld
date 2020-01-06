@@ -13,15 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.HannahsWorld.Houses;
+package org.terasology.HannahsWorld.Candle;
 
-import org.terasology.math.Region3i;
-import org.terasology.world.generation.Border3D;
-import org.terasology.world.generation.facets.base.SparseObjectFacet3D;
+public class Candle {
+    public int getCandleHeight() {
+        return getStickHeight() + getFlameHeight();
+    }
 
-public class HouseFacet extends SparseObjectFacet3D<House> {
+    public int getCandleWidth() {
+        return 1;
+    }
 
-    public HouseFacet(Region3i targetRegion, Border3D border) {
-        super(targetRegion, border);
+    public int getStickHeight() {
+        return 8;
+    }
+
+    public int getStickWidth() {
+        return 1;
+    }
+
+    public int getFlameHeight() {
+        return 2;
     }
 }
