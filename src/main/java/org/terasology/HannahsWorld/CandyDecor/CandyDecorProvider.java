@@ -21,16 +21,18 @@ import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.generation.*;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generator.plugin.RegisterPlugin;
 
 @Produces(CandyDecorFacet.class)
 @Requires(@Facet(value = SurfaceHeightFacet.class, border = @FacetBorder(sides = 4)))
-public class CandyDecorProvider implements FacetProvider {
+@RegisterPlugin
+public class CandyDecorProvider implements FacetProviderPlugin {
 
     private Noise noise;
 
     @Override
     public void setSeed(long seed) {
-        noise = new WhiteNoise(seed + 2);
+        noise = new WhiteNoise(seed + 4);
     }
 
 
@@ -41,7 +43,7 @@ public class CandyDecorProvider implements FacetProvider {
         //extendBy(top, bottom, sides) is the method used for this.
         //We'll cover this in the next section: Borders. :)
 
-        Border3D border = region.getBorderForFacet(CandyDecorFacet.class).extendBy(2, 0, 2);
+        Border3D border = region.getBorderForFacet(CandyDecorFacet.class).extendBy(20, 20, 20);
         CandyDecorFacet facet = new CandyDecorFacet(region.getRegion(), border);
         SurfaceHeightFacet surfaceHeightFacet = region.getRegionFacet(SurfaceHeightFacet.class);
 
@@ -56,7 +58,7 @@ public class CandyDecorProvider implements FacetProvider {
                         surfaceHeight <= facet.getWorldRegion().maxY()) {
 
                     // TODO: check for overlap
-                    if (noise.noise(wx, wz) > 0.9996) {
+                    if (noise.noise(wx, wz) > 0.1) {
                         facet.setWorld(wx, surfaceHeight, wz, new CandyDecor());
                     }
                 }

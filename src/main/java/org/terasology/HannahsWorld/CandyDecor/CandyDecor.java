@@ -20,7 +20,7 @@ public class CandyDecor {
         return 1;
     }
     public int getWidth(){
-        return 2;
+        return 1;
     }
 
 }

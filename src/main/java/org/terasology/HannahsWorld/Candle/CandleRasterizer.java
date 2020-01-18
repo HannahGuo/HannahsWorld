@@ -10,26 +10,35 @@ import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
+import org.terasology.world.generation.WorldRasterizerPlugin;
+import org.terasology.world.generation.facets.SeaLevelFacet;
+import org.terasology.world.generator.plugin.RegisterPlugin;
 
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CandleRasterizer implements WorldRasterizer {
-    private Block candlePink;
+@RegisterPlugin
+public class CandleRasterizer implements WorldRasterizerPlugin {
+    private Block oakTrunk;
     private Block lava;
 
     @Override
     public void initialize() {
-        candlePink = CoreRegistry.get(BlockManager.class).getBlock("HannahsWorld:CandlePink");
+        oakTrunk = CoreRegistry.get(BlockManager.class).getBlock("CoreBlocks:OakTrunk");
         lava = CoreRegistry.get(BlockManager.class).getBlock("CoreBlocks:Lava");
     }
 
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
         CandleFacet candleFacet = chunkRegion.getFacet(CandleFacet.class);
+        SeaLevelFacet seaLevelFacet = chunkRegion.getFacet(SeaLevelFacet.class);
+        int seaLevel = seaLevelFacet.getSeaLevel();
 
         for (Map.Entry<BaseVector3i, Candle> entry : candleFacet.getWorldEntries().entrySet()) {
             Vector3i candlePosition = new Vector3i(entry.getKey()).addY(0);
+
+            if (candlePosition.y < seaLevel) continue;
+
             int heightAdd = ThreadLocalRandom.current().nextInt(0, 2);
             int height = entry.getValue().getCandleHeight() + heightAdd;
             int width = entry.getValue().getCandleWidth();
@@ -47,7 +56,7 @@ public class CandleRasterizer implements WorldRasterizer {
             for (Vector3i newBlockPosition : candleRegion) {
                 if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
                     if (candleStick.encompasses(newBlockPosition)) {
-                        chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), candlePink);
+                        chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), oakTrunk);
                     } else if (!candleStick.encompasses(newBlockPosition)) {
                         if (candleFlame.encompasses(newBlockPosition) || candleFlame.encompasses(newBlockPosition)) {
                             chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), lava);

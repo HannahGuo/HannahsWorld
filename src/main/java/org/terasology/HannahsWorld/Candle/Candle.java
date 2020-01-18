@@ -25,7 +25,7 @@ public class Candle {
     }
 
     public int getStickHeight() {
-        return 8;
+        return 10;
     }
 
     public int getStickWidth() {
@@ -33,6 +33,6 @@ public class Candle {
     }
 
     public int getFlameHeight() {
-        return 2;
+        return 3;
     }
 }

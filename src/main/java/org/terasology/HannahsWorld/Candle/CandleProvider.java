@@ -6,10 +6,12 @@ import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.generation.*;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generator.plugin.RegisterPlugin;
 
 @Produces(CandleFacet.class)
 @Requires(@Facet(value = SurfaceHeightFacet.class, border = @FacetBorder(sides = 4)))
-public class CandleProvider implements FacetProvider {
+@RegisterPlugin
+public class CandleProvider implements FacetProviderPlugin {
 
     private Noise noise;
 
@@ -25,7 +27,7 @@ public class CandleProvider implements FacetProvider {
         //extendBy(top, bottom, sides) is the method used for this.
         //We'll cover this in the next section: Borders. :)
 
-        Border3D border = region.getBorderForFacet(CandleFacet.class).extendBy(10, 10, 10);
+        Border3D border = region.getBorderForFacet(CandleFacet.class).extendBy(30, 30, 30);
         CandleFacet facet = new CandleFacet(region.getRegion(), border);
         SurfaceHeightFacet surfaceHeightFacet = region.getRegionFacet(SurfaceHeightFacet.class);
 
@@ -40,7 +42,7 @@ public class CandleProvider implements FacetProvider {
                         surfaceHeight <= facet.getWorldRegion().maxY()) {
 
                     // TODO: check for overlap
-                    if (noise.noise(wx, wz) > 0.9995) {
+                    if (noise.noise(wx, wz) > 0.993) {
                         facet.setWorld(wx, surfaceHeight, wz, new Candle());
                     }
                 }
