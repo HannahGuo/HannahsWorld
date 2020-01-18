@@ -15,10 +15,6 @@
  */
 package org.terasology.HannahsWorld;
 
-import org.terasology.HannahsWorld.Candle.CandleProvider;
-import org.terasology.HannahsWorld.Candle.CandleRasterizer;
-import org.terasology.HannahsWorld.CandyDecor.CandyDecorProvider;
-import org.terasology.HannahsWorld.CandyDecor.CandyDecorRasterizer;
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.engine.SimpleUri;
 import org.terasology.registry.In;

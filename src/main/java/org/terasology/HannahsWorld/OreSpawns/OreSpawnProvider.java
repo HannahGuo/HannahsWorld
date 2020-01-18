@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.HannahsWorld.CandyDecor;
+package org.terasology.HannahsWorld.OreSpawns;
 
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.Rect2i;
@@ -23,10 +23,10 @@ import org.terasology.world.generation.*;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generator.plugin.RegisterPlugin;
 
-@Produces(CandyDecorFacet.class)
+@Produces(OreSpawnsFacet.class)
 @Requires(@Facet(value = SurfaceHeightFacet.class, border = @FacetBorder(sides = 4)))
 @RegisterPlugin
-public class CandyDecorProvider implements FacetProviderPlugin {
+public class OreSpawnProvider implements FacetProviderPlugin {
 
     private Noise noise;
 
@@ -43,8 +43,8 @@ public class CandyDecorProvider implements FacetProviderPlugin {
         //extendBy(top, bottom, sides) is the method used for this.
         //We'll cover this in the next section: Borders. :)
 
-        Border3D border = region.getBorderForFacet(CandyDecorFacet.class).extendBy(20, 20, 20);
-        CandyDecorFacet facet = new CandyDecorFacet(region.getRegion(), border);
+        Border3D border = region.getBorderForFacet(OreSpawnsFacet.class).extendBy(20, 20, 20);
+        OreSpawnsFacet facet = new OreSpawnsFacet(region.getRegion(), border);
         SurfaceHeightFacet surfaceHeightFacet = region.getRegionFacet(SurfaceHeightFacet.class);
 
         Rect2i worldRegion = surfaceHeightFacet.getWorldRegion();
@@ -59,12 +59,12 @@ public class CandyDecorProvider implements FacetProviderPlugin {
 
                     // TODO: check for overlap
                     if (noise.noise(wx, wz) > 0.1) {
-                        facet.setWorld(wx, surfaceHeight, wz, new CandyDecor());
+                        facet.setWorld(wx, surfaceHeight, wz, new OreSpawn());
                     }
                 }
             }
         }
 
-        region.setRegionFacet(CandyDecorFacet.class, facet);
+        region.setRegionFacet(OreSpawnsFacet.class, facet);
     }
 }

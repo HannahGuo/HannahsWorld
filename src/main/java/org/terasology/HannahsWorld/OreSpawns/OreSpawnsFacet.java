@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.HannahsWorld.CandyDecor;
+package org.terasology.HannahsWorld.OreSpawns;
 
+import org.terasology.HannahsWorld.OreSpawns.OreSpawn;
 import org.terasology.math.Region3i;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.facets.base.SparseObjectFacet3D;
 
-public class CandyDecorFacet extends SparseObjectFacet3D<CandyDecor> {
+public class OreSpawnsFacet extends SparseObjectFacet3D<OreSpawn> {
 
-    public CandyDecorFacet(Region3i targetRegion, Border3D border) {
+    public OreSpawnsFacet(Region3i targetRegion, Border3D border) {
         super(targetRegion, border);
     }
 }

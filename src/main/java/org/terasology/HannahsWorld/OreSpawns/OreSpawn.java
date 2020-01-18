@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.HannahsWorld.CandyDecor;
+package org.terasology.HannahsWorld.OreSpawns;
 
-public class CandyDecor {
+public class OreSpawn {
     public int getHeight(){
         return 1;
     }

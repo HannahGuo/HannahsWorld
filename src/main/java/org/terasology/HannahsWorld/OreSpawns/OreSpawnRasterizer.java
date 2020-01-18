@@ -13,27 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.HannahsWorld.CandyDecor;
+package org.terasology.HannahsWorld.OreSpawns;
 
 import org.terasology.math.ChunkMath;
 import org.terasology.math.Region3i;
 import org.terasology.math.geom.BaseVector3i;
 import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;
-import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.SimplexNoise;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
-import org.terasology.world.generation.WorldRasterizer;
 import org.terasology.world.generation.WorldRasterizerPlugin;
 import org.terasology.world.generator.plugin.RegisterPlugin;
 
 import java.util.Map;
 
 @RegisterPlugin
-public class CandyDecorRasterizer implements WorldRasterizerPlugin {
+public class OreSpawnRasterizer implements WorldRasterizerPlugin {
     private Block diamondBar;
     private Block goldBar;
     private Block copperBar;
@@ -98,9 +96,9 @@ public class CandyDecorRasterizer implements WorldRasterizerPlugin {
 
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
-        CandyDecorFacet candyDecorFacet = chunkRegion.getFacet(CandyDecorFacet.class);
+        OreSpawnsFacet oreSpawnsFacet = chunkRegion.getFacet(OreSpawnsFacet.class);
         SimplexNoise noise = new SimplexNoise(31495);
-        for (Map.Entry<BaseVector3i, CandyDecor> entry : candyDecorFacet.getWorldEntries().entrySet()) {
+        for (Map.Entry<BaseVector3i, OreSpawn> entry : oreSpawnsFacet.getWorldEntries().entrySet()) {
             Vector3i candyPosition = new Vector3i(entry.getKey()).addY(0);
 
             Vector3i candyMinimumPos = new Vector3i(candyPosition).sub(1, 0, 0);
